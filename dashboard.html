@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Tutor Dashboard</h1>
+<p>Welcome, {{ session.name }}! Manage your profile, schedule, and sessions here.</p>
+
+<a href="{{ url_for('manage_sessions') }}" class="btn btn-primary">Manage My Sessions</a>
+<a href="{{ url_for('edit_tutor_profile') }}" class="btn btn-secondary">Edit My Profile</a>
+
+{% endblock %}

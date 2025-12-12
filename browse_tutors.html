@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Browse Tutors</h1>
+<div class="tutor-list">
+    {% for tutor in tutors %}
+    <div class="tutor-card">
+        <h3>{{ tutor.name }}</h3>
+        <p><strong>Bio:</strong> {{ tutor.bio }}</p>
+        <p><strong>Rating:</strong> {{ '%.1f'|format(tutor.rating_avg) }} ⭐</p>
+        <p><strong>Rate:</strong> ${{ '%.2f'|format(tutor.hourly_rate) }}/hr</p>
+        <a href="#" class="btn btn-secondary">View Profile</a>
+	<a href="{{ url_for('tutor_profile', tutor_id=tutor.user_id) }}" class="btn btn-secondary">View Profile</a>
+    </div>
+    {% else %}
+    <p>No verified tutors available at the moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}

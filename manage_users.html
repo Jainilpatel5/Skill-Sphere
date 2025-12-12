@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Manage Users</h1>
+<p>Here you can view all users and manage their status.</p>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.user_id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td><span class="badge role-{{ user.role }}">{{ user.role }}</span></td>
+                <td>
+                    {% if user.role == 'tutor' %}
+                        <span class="badge status-{{ user.verification_status }}">
+                            {{ user.verification_status or 'N/A' }}
+                        </span>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.role == 'tutor' and user.verification_status == 'pending' %}
+        		<form action="{{ url_for('approve_tutor', tutor_id=user.user_id) }}" method="POST" style="display:inline;">
+            			<button type="submit" class="btn btn-success btn-sm">Approve</button>
+       			</form>
+			{% endif %}
+ 	  		<a href="#" class="btn btn-danger btn-sm">Block</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

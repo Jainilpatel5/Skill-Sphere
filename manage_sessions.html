@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Manage My Sessions</h1>
+<p>View your upcoming and past sessions.</p>
+
+<div class="table-container">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Session ID</th>
+                <th>Student Name</th>
+                <th>Skill</th>
+                <th>Date & Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session.session_id }}</td>
+                <td>{{ session.student_name }}</td>
+                <td>{{ session.skill_name }}</td>
+                <td>{{ session.start_time.strftime('%Y-%m-%d %I:%M %p') }}</td>
+                <td><span class="badge status-{{ session.status }}">{{ session.status }}</span></td>
+                <td>
+                    {% if session.status == 'booked' %}
+                        <a href="#" class="btn btn-primary btn-sm">Start</a>
+                        <a href="#" class="btn btn-secondary btn-sm">Reschedule</a>
+                        <a href="#" class="btn btn-danger btn-sm">Cancel</a>
+                    {% elif session.status == 'completed' %}
+                        <span>Completed</span>
+                    {% else %}
+                        <span>Cancelled</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">You have no sessions scheduled.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

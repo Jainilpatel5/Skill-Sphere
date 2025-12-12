@@ -1,0 +1,21 @@
+<nav class="navbar">
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="nav-logo">Skill Sphere 🚀</a>
+        <ul class="nav-menu">
+            {% if session.is_logged_in %}
+                {% if session.role == 'admin' %}
+                    <li><a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a></li>
+                {% elif session.role == 'tutor' %}
+                    <li><a href="{{ url_for('tutor_dashboard') }}">Tutor Dashboard</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('student_dashboard') }}">Student Dashboard</a></li>
+                    <li><a href="{{ url_for('browse_tutors') }}">Browse Tutors</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
